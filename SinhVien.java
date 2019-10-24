@@ -1,20 +1,19 @@
-package TH3;
-class SinhVien {
+package TH5;
+public class SinhVien {
 	private String hoTen;
-	private Diem dm1, dm2;
-	
-	public SinhVien(String ten, Diem dm1, Diem dm2) {
-		hoTen= ten;
-		this.dm1= dm1;
-		this.dm2= dm2;
+	private DiemHP hp1,hp2;
+	public SinhVien(String ten,DiemHP hp1,DiemHP hp2) {
+		hoTen=ten;
+		this.hp1=hp1;
+		this.hp2=hp2;
 	}
-	
 	public double tinhDTB() {
-		return (dm1.tinhDiem()+dm2.tinhDiem())/2;
+		return (double)(hp1.tinhDiem()*hp1.laySoTinChi()+hp2.tinhDiem()*hp2.laySoTinChi())
+				/(hp1.laySoTinChi()+hp2.laySoTinChi());
 	}
-	
 	public String toString() {
-		return "Ten là: "+hoTen +", D1: "+dm1.tinhDiem()
-		+", D2: "+dm2.tinhDiem()+", DTB: "+ tinhDTB();
+		return hoTen+", Điểm HP1: "+hp1.tinhDiem()
+					+", Điểm HP2: "+hp2.tinhDiem()
+					+", Điểm TB: "+this.tinhDTB();	
 	}
 }
