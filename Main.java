@@ -1,21 +1,15 @@
-package TH5;
-public class Main {
+package th3;
 
+
+import th3.Diem;
+
+class Main {
 	public static void main(String[] args) {
-		SinhVien sv[]=new SinhVien[3];
-		sv[0]=new SinhVien("Nguyễn Văn Hùng",
-							new HPLyThuyet("Pháp Luật Đại Cương",3,6,7,8),
-							new HPThucHanh("Lập trình cơ bản",4,7,8,9));
-		sv[1]=new SinhVien("Đồng Minh Hoài Vũ",
-							new HPLyThuyet("Nhập môn cơ sở dữ liệu",3,7,6,7),
-							new HPThucHanh("Tin học đại cương",3,7,4,5));
-		sv[2]=new SinhVien("Huỳnh Chí Tiến",
-							new HPLyThuyet("Tư tưởng Hồ Chí Minh",3,9,6,8),
-							new HPThucHanh("Lắp ráp máy tính",2,9,9,9));
-		
-		System.out.println(sv[0]);
-		System.out.println(sv[1]);
-		System.out.println(sv[2]);
+		Diem d1= new Diem("Lap trinh Java", 4, 8, 7 ,8);
+		Diem d2= new Diem("Lap trinh c", 5, 9, 9, 8);
+		SinhVien s1= new SinhVien("Lê Thị Như Trâm",d1, d2);
+		System.out.println(d1);
+		System.out.println(s1);
 	}
-
 }
+
