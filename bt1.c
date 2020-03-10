@@ -1,27 +1,31 @@
-#include <conio.h>
 #include <stdio.h>
-void main(void){
+#include <conio.h>
+#include <string.h>
+int Tong(long n);
+main()
+{
 	FILE *f1, *f2;
-	int i, n, so;
-	f1 = fopen("e:\\btC\\Data19\\indata1.dat","r");
-	f2 = fopen("e:\\btC\\Data19\\outdata1.dat","w");
-	fscanf(f1, "%d",&n);
-	for(i=1;i<=n;i++)
+	int n,i;
+	long d;
+	f1= fopen ("D:\\nhutram\\bt1.txt",  "r" );
+	f2= fopen ("D:\\nhutram\\kqbt1.txt",  "w" );
+	fscanf(f1, "%d", &n);
+	for ( i=0; i<n; i++)
 	{
-		fscanf(f1,"%d",&so);
-		fprintf(f2,"%d",tongchuso(so));
+		fscanf(f1, "%ld", &d);
+		fprintf(f2, "%d\n", Tong(d));
 	}
 	fclose(f1);
 	fclose(f2);
-	getch();
+	
 }
-int tongchuso(int n)
-{
-	int t=0;
-	while (n!=0)
+int Tong(long n){
+	int r, S=0;
+	while(n != 0)
 	{
-		t=t+n%10;
-		n=n/10;
+		r = n%10;
+		n = n/10;
+		S = S + r;
 	}
-	return t;	
+	return S;
 }
