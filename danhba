@@ -1,0 +1,167 @@
+#define max 100
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+struct ThueBao
+{
+	char tenTB[30];
+	char diaChi[50];
+	char soDT[10][11];
+	int soSoDT;
+};
+
+struct DanhBa
+{
+	struct ThueBao db[max];
+	int soTB;
+};
+
+void nhapThueBao(struct ThueBao *x)
+{
+	int i;
+	printf("Nhap ten thue bao: "); gets(x->tenTB);
+	printf("Nhap dia chi thue bao: "); gets(x->diaChi);
+	printf("Nhap so so dien thoai cua thue bao: ");
+	scanf("%d",&x->soSoDT);
+	fflush(stdin);
+	for(i=0;i<x->soSoDT;i++)
+	{
+		printf("Nhap so dien thoai thu %d: ",i+1);
+		gets(x->soDT[i]);
+	}
+}
+
+void inThueBao(struct ThueBao x)
+{
+	int i;
+	printf("Ten thue bao: "); puts(x.tenTB);
+	printf("Dia chi: "); puts(x.diaChi);
+	printf("So so dien thoai: %d\n",x.soSoDT);
+	for(i=0;i<x.soSoDT;i++)
+	{
+		printf("So dien thoai thu %d: ",i+1);
+		puts(x.soDT[i]);
+	}
+}
+
+void nhapDanhBa(struct DanhBa *d)
+{
+	int i;
+	printf("So thue bao: "); 
+	scanf("%d",&d->soTB);
+	fflush(stdin);
+	for(i=0; i<d->soTB;i++)
+		nhapThueBao(&d->db[i]);
+}
+
+void inDanhBa(struct DanhBa d)
+{
+	int i;
+	for(i=0;i<d.soTB;i++){
+		printf("Thong tin thue bao thu %d:\n",i+1);
+		inThueBao(d.db[i]);
+	}
+}
+
+void themThueBao(struct DanhBa *d, struct ThueBao x, int k)
+{
+	int i,j;
+	for(i=d->soTB; i>k; i--)
+		d->db[i]=d->db[i-1];
+	d->db[k] = x;
+	d->soTB++;
+}
+
+int tim(struct DanhBa d,char ten[])
+{
+	int i;
+	for(i=0;i<d.soTB;i++)
+		if(strcmp(ten,d.db[i].tenTB)==0)
+			return i;
+	return -1;
+}
+
+void xoa(struct DanhBa *d,int k)
+{
+	int i;
+	for(i=k;i<d->soTB-1;i++)
+		d->db[i]=d->db[i+1];
+	d->soTB--;
+}
+
+void tim_xoa(struct DanhBa *d, char ten[])
+{
+	int k;
+	k=tim(*d,ten);
+	if(k!=-1)	
+		xoa(d,k);
+}
+
+int timSDT(struct DanhBa d, char sdt[])
+{
+	int i,j;
+	for(i=0; i<d.soTB; i++)
+		for(j=0;j<d.db[i].soSoDT; j++)
+			if(strcmp(d.db[i].soDT[j],sdt)==0)
+				return i;
+
+	return -1;
+}
+
+void sapXep(struct DanhBa *d)
+{
+	int i,j;
+	struct ThueBao tg;
+	for(i=0;i<d->soTB-1;i++)
+		for (j=0;j<d->soTB;j++)
+			if(strcmp(d->db[i].tenTB,d->db[j].tenTB)>0)
+			{
+				tg=d->db[i];
+				d->db[i]=d->db[j];
+				d->db[j]=tg;
+			}
+}
+
+
+void main()
+{
+	int k;
+	struct DanhBa db;
+	struct ThueBao t;
+	nhapDanhBa(&db);
+	inDanhBa(db);
+	printf("Nhap thue bao can them: \n");
+	nhapThueBao(&t);
+	printf("Nhap vi tri can them: "); scanf("%d",&k);
+	themThueBao(&db,t,k-1);
+	inDanhBa(db);
+	char tenkh[30];
+	printf("Nhap ten thue bao can tim: "); 
+	fflush(stdin);
+	gets(tenkh);
+	k=tim(db,tenkh);
+	if(k!=-1)
+		printf("Tim thay thue bao tai vi tri %d\n",k+1);
+	else 
+		printf("Khong tim thay\n");
+	
+	printf("Nhap ten thue bao can xoa: "); 
+	fflush(stdin);
+	gets(tenkh);
+	tim_xoa(&db,tenkh);
+	inDanhBa(db);
+	
+	char sdt[11];
+	printf("Nhap so dien thoai can tim: "); 
+	fflush(stdin);
+	gets(sdt);
+	k=timSDT(db,sdt);
+	if(k!=-1)
+		printf("Tim thay thue bao tai vi tri %d\n",k+1);
+	else 
+		printf("Khong tim thay\n");
+	
+	sapXep(&db);
+	inDanhBa(db);
+}
